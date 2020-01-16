@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jsexp" default="dist" basedir=".">
+
+	<!--
+ *
+ * Copyright (C) 2009, 2012, 2015 Julian Mendez
+ *
+ *
+ * This file is part of jsexp.
+ *
+ * jsexp is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * jsexp is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with jsexp.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+-->
+
+	<!-- For more information about this file, see https://ant.apache.org -->
+
+	<!-- Imports 'project.groupId', 'project.artifactId', and 'project.version' properties. -->
+	<xmlproperty file="pom.xml" />
+
+	<!-- Project-specific properties. -->
+	<fail unless="project.groupId">Error: 'project.groupId' is undefined. This property is the group identifier.</fail>
+	<fail unless="project.artifactId">Error: 'project.artifactId' is undefined. This property is the artifact identifier.</fail>
+	<fail unless="project.version">Error: 'project.version' is undefined. This property is the version number in the form major.minor.patch.</fail>
+
+	<property name="project.build.directory" value="${basedir}/target" />
+	<property name="project.build.outputDirectory" value="${project.build.directory}/classes" />
+
+	<!-- Cleans compiled files. -->
+	<target name="clean">
+		<delete dir="${project.build.directory}" />
+	</target>
+
+	<!-- Compiles this module. -->
+	<target name="dist">
+		<subant genericantfile="genericantfile.xml" buildpath=".">
+			<property name="project.groupId" value="${project.groupId}" />
+			<property name="project.artifactId" value="${project.artifactId}" />
+			<property name="project.version" value="${project.version}" />
+		</subant>
+	</target>
+
+</project>
+

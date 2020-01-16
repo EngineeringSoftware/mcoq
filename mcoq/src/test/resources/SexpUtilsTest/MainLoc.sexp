@@ -1,0 +1,1 @@
+((fname(InFile /home/parovic/projects/coq-mutation/mutator/_downloads/StructTact/StringOrders.v))(line_nb 97)(bol_pos 2352)(line_nb_last 97)(bol_pos_last 2352)(bp 2356)(ep 2372))

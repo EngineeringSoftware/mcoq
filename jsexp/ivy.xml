@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+
+	<info organisation="de.tu-dresden.inf.lat.jsexp" module="jsexp" />
+
+	<configurations defaultconfmapping="compile->default;sources;javadoc">
+		<conf name="compile" />
+		<conf name="runtime" extends="compile" />
+		<conf name="test" extends="runtime" />
+		<conf name="sources" />
+		<conf name="javadoc" />
+	</configurations>
+
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.12" />
+	</dependencies>
+
+</ivy-module>
+

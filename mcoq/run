@@ -1,0 +1,7 @@
+#!/bin/bash
+
+java -jar build/libs/mcoq-all-1.0-SNAPSHOT.jar $@
+
+#./run --flag "$HOME/projects/coq-mutation/mutator/_downloads/structtact,StructTact"
+# --project $HOME/projects/coq-mutation/mutator/_downloads/structtact
+# -e file.sexp -m REPLACE_LIST_WITH_HEAD

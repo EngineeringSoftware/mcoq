@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="parent" default="dist" basedir=".">
+
+	<!--
+ *
+ * Copyright 2009-2015 Julian Mendez
+ *
+ *
+ * This file is part of GenericAntFile [https://github.com/julianmendez/genericantfile]
+ * and formerly was part of jcel [https://github.com/julianmendez/jcel].
+ *
+ *
+ * The contents of this file are subject to the GNU Lesser General Public License
+ * version 3
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * Alternatively, the contents of this file may be used under the terms
+ * of the Apache License, Version 2.0, in which case the
+ * provisions of the Apache License, Version 2.0 are applicable instead of those
+ * above.
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+-->
+
+	<!-- For more information about this file, see https://ant.apache.org -->
+
+	<!-- Project-specific properties. -->
+	<fail unless="project.groupId">Error: 'project.groupId' is undefined. This property is the group identifier.</fail>
+	<fail unless="project.artifactId">Error: 'project.artifactId' is undefined. This property is the artifact identifier.</fail>
+	<fail unless="project.version">Error: 'project.version' is undefined. This property is the version number in the form major.minor.patch.</fail>
+
+	<!-- Default value for Javadoc source path. -->
+	<property name="javadoc.sourcepath" value="src/main/java:src/main/javadoc" />
+
+	<!-- Default value for project directory. -->
+	<property name="project.directory" value="${basedir}" />
+
+	<!-- General properties. -->
+	<property name="project.build.directory" value="${project.directory}/target" />
+	<property name="_src.subdirectory" value="src" />
+	<property name="_src.directory" value="${project.directory}/${_src.subdirectory}" />
+	<property name="_src.javadoc.directory" value="${_src.directory}/main/javadoc" />
+	<property name="project.build.sourceDirectory" value="${_src.directory}/main/java" />
+	<property name="project.build.testSourceDirectory" value="${_src.directory}/test/java" />
+	<property name="_project.build.resourcesDirectory" value="${_src.directory}/main/resources" />
+	<property name="_javadoc.destDir" value="${project.build.directory}/apidocs" />
+	<property name="_javadoc.show" value="protected" />
+	<property name="project.build.outputDirectory" value="${project.build.directory}/classes" />
+	<property name="project.build.testOutputDirectory" value="${project.build.directory}/test-classes" />
+	<property name="project.reporting.outputDirectory" value="${project.build.directory}/test-reports" />
+	<property name="_debuglevel" value="lines,vars,source" />
+
+	<!-- Beginning of snippet for Ivy. -->
+
+	<!-- Properties for Ivy. -->
+	<property name="project.build.ivyReportDirectory" location="${project.build.directory}/ivy-reports" />
+	<property name="maven.repository" value="https://repo.maven.apache.org/maven2" />
+	<property name="ivy.install.version" value="2.3.0" />
+	<condition property="ivy.home" value="${env.IVY_HOME}">
+		<isset property="env.IVY_HOME" />
+	</condition>
+	<property name="ivy.home" value="${user.home}/.ant" />
+	<property name="ivy.jar.directory" value="${ivy.home}/lib/org/apache/ivy/ivy/${ivy.install.version}" />
+	<property name="ivy.jar.file" value="${ivy.jar.directory}/ivy-${ivy.install.version}.jar" />
+
+	<!-- Default value for directory of dependency jars. -->
+	<property name="jars.directory" value="${ivy.settings.dir}/target/jars/lib" />
+
+	<!-- Downloads Ivy. -->
+	<target name="downloadivy" unless="offline">
+		<mkdir dir="${ivy.jar.directory}" />
+		<get src="${maven.repository}/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true" />
+	</target>
+
+	<!-- Initializes Ivy. -->
+	<target name="initializeivy" depends="downloadivy">
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.directory}" includes="*.jar" />
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+	</target>
+
+	<!-- Initializes Ivy paths. -->
+	<target name="initialize" depends="initializeivy">
+		<ivy:resolve />
+		<ivy:report todir='${project.build.ivyReportDirectory}' graph='false' xml='false' />
+		<ivy:cachepath pathid="compile.path" conf="compile" />
+		<ivy:cachepath pathid="runtime.path" conf="runtime" />
+		<ivy:cachepath pathid="test.path" conf="test" />
+	</target>
+
+	<!-- Retrieves dependencies with Ivy. -->
+	<target name="retrieve" depends="initialize">
+		<ivy:retrieve pattern="${jars.directory}/[orgPath]/[module]/[revision]/[artifact]-[revision].[ext]" type="jar,bundle" />
+		<ivy:retrieve pattern="${jars.directory}/[orgPath]/[module]/[revision]/[artifact]-[revision]-sources.[ext]" type="source" />
+		<ivy:retrieve pattern="${jars.directory}/[orgPath]/[module]/[revision]/[artifact]-[revision]-[type].[ext]" type="javadoc" />
+	</target>
+
+	<!-- End of snippet for Ivy. -->
+
+	<!-- Cleans compiled files. -->
+	<target name="clean">
+		<delete dir="${project.build.directory}" />
+	</target>
+
+	<!-- Creates a jar with the source code. -->
+	<target name="source" depends="clean">
+		<mkdir dir="${project.build.directory}" />
+		<jar destfile="${project.build.directory}/${project.artifactId}-${project.version}-sources.jar">
+			<fileset dir="${project.build.sourceDirectory}" />
+			<fileset dir="${_project.build.resourcesDirectory}" erroronmissingdir="false" />
+			<manifest>
+				<attribute name="Implementation-Title" value="${project.groupId}-${project.artifactId}" />
+				<attribute name="Implementation-Version" value="${project.version}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Compiles the project. -->
+	<target name="compile">
+		<mkdir dir="${project.build.outputDirectory}" />
+		<javac srcdir="${project.build.sourceDirectory}" destdir="${project.build.outputDirectory}" debug="true" debuglevel="${_debuglevel}" includeantruntime="false" createMissingPackageInfoClass="false">
+			<classpath>
+				<path refid="compile.path" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Checks availability of unit tests. -->
+	<target name="checktestsources">
+		<available file="${project.build.testSourceDirectory}" property="testSourceDirectory.available" />
+	</target>
+
+	<!-- Compiles the tests. -->
+	<target name="compiletests" depends="compile, checktestsources" if="testSourceDirectory.available">
+		<mkdir dir="${project.build.testOutputDirectory}" />
+		<javac srcdir="${project.build.testSourceDirectory}" destdir="${project.build.testOutputDirectory}" classpath="${project.build.outputDirectory}" debug="true" debuglevel="${_debuglevel}" includeantruntime="false" createMissingPackageInfoClass="false">
+			<classpath>
+				<path refid="test.path" />
+				<pathelement path="${project.build.directory}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Performs the unit tests. -->
+	<target name="test" depends="compiletests" if="testSourceDirectory.available" unless="skipTests">
+		<mkdir dir="${project.reporting.outputDirectory}" />
+		<junit printsummary="on" haltonfailure="yes" fork="yes" dir="${project.directory}">
+			<classpath>
+				<path refid="test.path" />
+				<pathelement path="${project.build.outputDirectory}" />
+				<pathelement path="${project.build.testOutputDirectory}" />
+			</classpath>
+			<formatter type="plain" usefile="on" />
+			<batchtest fork="yes" todir="${project.reporting.outputDirectory}">
+				<fileset dir="${project.build.testSourceDirectory}" erroronmissingdir="false">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<!-- Creates a jar with the binaries. -->
+	<target name="jar" depends="compile">
+		<mkdir dir="${project.build.directory}" />
+		<jar destfile="${project.build.directory}/${project.artifactId}-${project.version}.jar">
+			<fileset dir="${project.build.outputDirectory}" />
+			<fileset dir="${_project.build.resourcesDirectory}" erroronmissingdir="false" />
+			<manifest>
+				<attribute name="Implementation-Title" value="${project.groupId}-${project.artifactId}" />
+				<attribute name="Implementation-Version" value="${project.version}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Creates the Javadoc. -->
+	<target name="javadoc">
+		<mkdir dir="${_javadoc.destDir}" />
+		<javadoc packagenames="*" sourcepath="${javadoc.sourcepath}" destdir="${_javadoc.destDir}" version="true" use="true" windowtitle="${project.groupId}-${project.artifactId}" overview="${_src.javadoc.directory}/overview.html" access="${_javadoc.show}" useexternalfile="true" />
+	</target>
+
+	<!-- Creates a jar with the Javadoc. -->
+	<target name="javadocjar" depends="javadoc">
+		<mkdir dir="${project.build.directory}" />
+		<jar destfile="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar">
+			<fileset dir="${_javadoc.destDir}" />
+			<manifest>
+				<attribute name="Implementation-Title" value="${project.groupId}-${project.artifactId}" />
+				<attribute name="Implementation-Version" value="${project.version}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Executes all the tasks. -->
+	<target name="dist" depends="clean, source, retrieve, compile, checktestsources, compiletests, test, jar, javadoc, javadocjar" />
+
+</project>
+

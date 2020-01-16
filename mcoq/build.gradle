@@ -1,0 +1,38 @@
+group 'edu.utexas.ece.mcoq8_10'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Parser for output of sercomp',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'edu.utexas.ece.mcoq8_10.MCoq'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+    compile project(':jsexp')
+    compile 'net.sourceforge.argparse4j:argparse4j:0.8.1'
+    compile 'com.google.guava:guava:26.0-jre'
+    compile 'junit:junit:4.12'
+    compile files('icoq/dpdgraph-parser-1.0-SNAPSHOT.jar')
+    testCompile 'junit:junit:4.12'
+}
+
+test {
+     // we want display the following test events
+     testLogging {
+         events "PASSED", "FAILED", "SKIPPED"
+     }
+}

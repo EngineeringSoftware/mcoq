@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+	<settings defaultResolver="chain" />
+	<resolvers>
+		<chain name="chain" returnFirst="true">
+			<filesystem name="local">
+				<!-- <artifact pattern="${ivy.settings.dir}/target/jars/lib/[orgPath]/[module]/[revision]/[artifact]-[revision].[ext]" /> -->
+				<artifact pattern="${ivy.settings.dir}/../[artifact]/target/[artifact]-[revision].[ext]" />
+			</filesystem>
+			<ibiblio name="central" m2compatible="true" />
+		</chain>
+	</resolvers>
+</ivysettings>
+
