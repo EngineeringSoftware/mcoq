@@ -6,8 +6,7 @@ Note for ICSE Reviewers: We recently cleaned the code and improved our scripts f
 0. Download and unpack the mCoq archive, and enter the directory:
 
 ```
-$ wget https://cozy.ece.utexas.edu/mcoq/mcoq.tgz
-$ tar xfz mcoq.tgz
+$ git clone https://github.com/EngineeringSoftware/mCoq.git
 $ cd mcoq
 ```
 
