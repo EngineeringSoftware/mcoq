@@ -3,7 +3,7 @@ Installing and using the mCoq public release
 
 Note for ICSE Reviewers: We recently cleaned the code and improved our scripts for running the tool, so the steps shown in paper may differ from the ones below. Additionally, the directory structures may differ from the ones shown in the demo video.
 
-0. Download and unpack the mCoq archive, and enter the directory:
+0. Clone the mcoq repository, and enter the directory:
 
 ```
 $ git clone https://github.com/EngineeringSoftware/mcoq.git
