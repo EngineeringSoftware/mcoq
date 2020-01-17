@@ -1,0 +1,5 @@
+jsexp/target
+mcoq/.gradle
+mcoq/build
+reports/results
+downloads/*/
