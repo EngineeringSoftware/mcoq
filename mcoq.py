@@ -103,7 +103,7 @@ def check_args():
     parser.add_argument('--rdir', help= 'rdir for coq. Colon separated list that becomes coq rflags. For example .,StructTact:.,fcsl becomes --rflag .,StructTact --rflag .,fcsl', default="")
     parser.add_argument('--qdir', help='qdir for coq. Colon separated list that becomes coq flags. For example .,StructTact:.,fcsl becomes --flag .,StructTact --flag .,fcsl', default="" )
     parser.add_argument('--skipeq', help='skip equivelant mutants', default=False, action='store_true' )
-    parser.add_argument('--threads', help='number of threads to run with mCoq. NOTE: if you are multithreading mcoq, reporting will not work', default='')
+    parser.add_argument('--threads', help='number of threads to run with mCoq.', default='')
     parser.add_argument('--dry', help='immediately return command to run java MCoq tool', default=False, action='store_true' )
     parser.add_argument('--mutator', help='which mode of mCoq we are running in', default="", choices={"MutatorOneFileVO", "MutatorOneFileVOOptOrder", "MutatorOneFileVOSkip", "MutatorOneFileVONoLeaves", "MutatorOneFileVOParCheck", "MutatorOneFileVOParMutant"} )
     parser.add_argument('--mutations', help='list of mutations to run separated by ,', default="" )
@@ -115,6 +115,9 @@ def check_args():
     except:
         print("ERROR: Missing required arguments. Please ensure you have passed correct arguments. List of required args shown above.")
         return False
+
+    if args.mutator == "" and args.threads != "" and args.threads != "1":
+        args.mutator = "MutatorOneFileVOParMutant"
     
     if args.qdir == "" and args.rdir == "":
         print("ERROR: Missing required arguments qdir/rdir. You need to specify one of these two arguments.")
