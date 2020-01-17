@@ -57,9 +57,9 @@ the available options, use:
 ```
 
 For example, to apply mCoq to [StructTact][structtact-repo]
-revision [`b95f041`][structtact-revision], use:
+revision [`82a85b7`][structtact-revision], use:
 ```
-./mcoq.py --project StructTact --sha b95f041 \
+./mcoq.py --project StructTact --threads 2 --sha 82a85b7 \
   --url https://github.com/uwplse/StructTact.git \
   --buildcmd "./configure && make -j4" --qdir ".,StructTact"
 ```
@@ -71,4 +71,4 @@ may otherwise take a long time to complete.
 
 [ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
 [structtact-repo]: https://github.com/uwplse/StructTact
-[structtact-revision]: https://github.com/uwplse/StructTact/commit/b95f041cb83986fb0fe1f9689d7196e2f09a4839
+[structtact-revision]: https://github.com/uwplse/StructTact/commit/82a85b7ec07e71fa6b30cfc05f6a7bfb09ef2510
