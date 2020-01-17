@@ -1,14 +1,15 @@
 # mCoq: Mutation Analysis for Coq
 
 mCoq is a tool for mutation analysis of verification projects that use the
-[Coq proof assistant](https://coq.inria.fr). mCoq applies a set of mutation
-operators to Coq definitions, with each application generating a modified
-version, called a mutant, of the project. If all proofs of a mutant are
-successfully checked, the mutant is declared live; otherwise it is declared
-killed. mCoq produces HTML reports pinpointing both live and killed mutants,
-where live mutants may indicate incomplete specifications. The
-[research paper][ase-paper] provides more information on the technique
-and optimizations that mCoq implements.
+[Coq proof assistant](https://coq.inria.fr).
+
+mCoq applies a set of mutation operators to Coq definitions, generating
+modified versions, called mutants, of the project. If all proofs of a
+mutant are successfully checked, a mutant is declared live; otherwise it
+is declared killed. mCoq produces HTML reports pinpointing both live and
+killed mutants in the Coq code, where live mutants may indicate
+incomplete specifications. The [research paper][ase-paper] provides more
+information on the technique and optimizations that mCoq implements.
 
 Note to ICSE-Demo reviewers: we recently cleaned up the code and improved
 our scripts for running the tool, so the steps shown in the paper submission
@@ -56,7 +57,7 @@ the available options, use:
 ```
 
 For example, to apply mCoq to [StructTact][structtact-repo]
-revision [b95f041][structtact-revision], use:
+revision [`b95f041`][structtact-revision], use:
 ```
 ./mcoq.py --project StructTact --sha b95f041 \
   --url https://github.com/uwplse/StructTact.git \
