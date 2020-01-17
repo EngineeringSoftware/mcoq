@@ -18,69 +18,6 @@ COQ_VERSION = "8.10"
 DOWNLOADS_DIR = "downloads"
 RESULTS_DIR = "reports/results"
 
-PRESET_PROJECTS = {
-    "flocq" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/fcoq/flocq",
-               "sha":"afa04b781439bdc8e7b64580ce5227057fe706f1",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":"src,Flocq"},
-    "structtact" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/structtact",
-               "sha":"5c54c0389d081993232292f132e876ae812f04ca",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":".,StructTact",
-               "rdir":""},
-    "prettyparsing" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/prettyparsing",
-               "sha":"f060ceae6c85d24439ae321bf2c3bd5d805d8a70",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":".,PrettyParsing",
-               "rdir":""},
-    "tlc" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/fcoq/tlc",
-               "sha":"103ffa6d00ec685d242fa27abf53e801b184f711",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":"src,TLC"},
-    "stdpp" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/fcoq/stdpp",
-               "sha":"c3ecf18aa9a57f7b3232751032d8de3eecb09ce6",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"theories,stdpp",
-               "rdir":""},
-    "qarithsternbrocot" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/qarithsternbrocot",
-               "sha":"c27a584414f997268265ec612621bb083368f81e",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,QArithSternBrocot"},
-    "huffman" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/huffman",
-               "sha":"c5610a9c5839157c6d607e674a27949efccbfd14",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,Huffman"},
-     "quicksortcomplexity" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/quicksortcomplexity",
-               "sha":"38efe42d89498a4edddaf1269df5173c62713f46",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,QuicksortComplexity"},
-    "stalmarck" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/stalmarck",
-               "sha":"8ddb07034d13337969a8049334a07e5ac1402bf3",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,Stalmarck"},
-    "atbr" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/fcoq/atbr",
-               "sha":"bb14340a9e8c3cde47a4b51fe530a669f915b647",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":"theories,ATBR"},
-    "fcslpcm" : {"url": "https://github.com/imdea-software/fcsl-pcm",
-               "sha":"eef45034808487fa3fa7dc360514c6734efc8d07",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,fcsl"},
-    "mathcomp" : {"url": "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/fcoq/mathcomp",
-               "sha":"d9b349fbd3c2e73182b91b972425fff4fa774d25",
-               "buildcmd": "coq_makefile -f _CoqProject -o Makefile; make -j8",
-               "qdir":"",
-               "rdir":".,mathcomp"}
-}
-
 def setup_repo():
     curr_dir = os.getcwd()
     if not os.path.exists(DOWNLOADS_DIR):
@@ -156,15 +93,13 @@ def get_results(command, mcoq_mode):
 
 def check_args():
     global args
-    IS_CUSTOM_MODE = not "--preset" in sys.argv
     parser = argparse.ArgumentParser()
     parser.add_argument('--project', help='project to run report on', required=True)
     parser.add_argument('--nocheck', help='skip checking dependencies', action='store_true', default=False)
-    parser.add_argument('--preset', help='run prexisting project in paper', action='store_true', default=False)
-    parser.add_argument('--sha', help='sha of defined project', required=IS_CUSTOM_MODE)
+    parser.add_argument('--sha', help='sha of defined project', required=True)
     parser.add_argument('--report_dir', help='directory to generate reports in', default='')
-    parser.add_argument('--buildcmd', help='coq build command', required=IS_CUSTOM_MODE)
-    parser.add_argument('--url', help='url to clone project', required=IS_CUSTOM_MODE)
+    parser.add_argument('--buildcmd', help='coq build command', required=True)
+    parser.add_argument('--url', help='url to clone project', required=True)
     parser.add_argument('--rdir', help= 'rdir for coq. Colon separated list that becomes coq rflags. For example .,StructTact:.,fcsl becomes --rflag .,StructTact --rflag .,fcsl', default="")
     parser.add_argument('--qdir', help='qdir for coq. Colon separated list that becomes coq flags. For example .,StructTact:.,fcsl becomes --flag .,StructTact --flag .,fcsl', default="" )
     parser.add_argument('--skipeq', help='skip equivelant mutants', default=False, action='store_true' )
@@ -180,25 +115,10 @@ def check_args():
     except:
         print("ERROR: Missing required arguments. Please ensure you have passed correct arguments. List of required args shown above.")
         return False
-
-    # if args.threads != "" and not args.skipreport:
-    #     print("ERROR: To run with multiple threads, must pass in the skipreport flag. Cannot run multiple threads and report.")
-    #     return False
     
-    if IS_CUSTOM_MODE and args.qdir == "" and args.rdir == "":
+    if args.qdir == "" and args.rdir == "":
         print("ERROR: Missing required arguments qdir/rdir. You need to specify one of these two arguments.")
         return False
-
-    if args.preset:
-        if not (args.project in PRESET_PROJECTS):
-            print("ERROR: Supplied incorrect name for preset project")
-            return False
-        project_data = PRESET_PROJECTS[args.project]
-        args.sha = project_data["sha"]
-        args.qdir = project_data["qdir"]
-        args.rdir = project_data["rdir"]
-        args.url = project_data["url"]
-        args.buildcmd = project_data["buildcmd"]
     
     return True
     
@@ -248,14 +168,6 @@ def check_dependencies():
         print("ERROR: Missing required dependencies. Please install to use tool (installation steps shown above). For a full list of installation steps, please refer to the README file.")
         return False
     return True
-
-def check_preset_dependencies():
-    if args.project == "prettyparsing":
-        check_opam_dependency("coq-struct-tact", "prettyparsing")
-    if args.project == "atbr":
-        check_opam_dependency("atbr-plugin", "atbr")
-    if args.project == "mathcomp":
-        check_opam_dependency("coq-mathcomp-ssreflect", "mathcomp")
 
 def check_opam_dependency(package, project):
     opam_check = check_command("opam list", package)
@@ -310,8 +222,6 @@ def main():
         if os.path.exists(OLD_REPORT_DIR+"/mcoq_log.txt"):
             os.system("rm -rf "+OLD_REPORT_DIR+"/mcoq_log.txt")
         
-    if args.preset:
-        check_preset_dependencies()    
     if not args.skipmutations:
         setup_repo()
         run_java(MCOQ_MODE)
@@ -325,12 +235,8 @@ if __name__ == '__main__':
         print("Error running mcoq script. Exiting now.")
         
 # General examples for running mcoq.py
-# (any custom project - min params) - ./mcoq.py --project [PROJECT NAME] --sha [PROJECT SHA] --url [PROJECT URL] --buildcmd [PROJECT CMD] --qdir [PROJECT QDIR] --rdir [PROJECT RDIR]
-# (any preset project - min params) - ./mcoq.py --project [PROJECT NAME] --preset
+# ./mcoq.py --project [PROJECT NAME] --sha [PROJECT SHA] --url [PROJECT URL] --buildcmd [PROJECT CMD] --qdir [PROJECT QDIR] --rdir [PROJECT RDIR]
 
-# Specifc examples for running mcoq.py
-# structtact (custom) - ./mcoq.py --project structtact --sha 5c54c0389d081993232292f132e876ae812f04ca --url "ssh://work@cozy.ece.utexas.edu:2002//home/repos/projects/coq-mutation/structtact" --buildcmd "coq_makefile -f _CoqProject -o Makefile; make -j8" --qdir ".,StructTact"
-# structtact (preset) - ./mcoq.py --project structtact --preset
-# prettyparsing (preset) - ./mcoq.py --project prettyparsing --preset
-
+# Specific examples for running mcoq.py
+# structtact - ./mcoq.py --project StructTact --sha 82a85b7ec07e71fa6b30cfc05f6a7bfb09ef2510 --url https://github.com/uwplse/StructTact.git --buildcmd "./configure && make -j4" --qdir ".,StructTact"
 # To see list of all arguments type ./mcoq.py --help
