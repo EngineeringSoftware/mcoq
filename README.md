@@ -57,17 +57,17 @@ the available options, use:
 ```
 
 For example, to apply mCoq to [StructTact][structtact-repo]
-revision [`82a85b7`][structtact-revision], use:
+revision [`82a85b7`][structtact-revision], run:
 ```
 ./mcoq.py --project StructTact --threads 2 --sha 82a85b7 \
   --url https://github.com/uwplse/StructTact.git \
-  --buildcmd "./configure && make -j4" --qdir ".,StructTact"
+  --buildcmd "./configure && make -j2" --qdir ".,StructTact"
 ```
 After running this command, look for a HTML report in the `reports` directory.
 
 For large Coq projects, it is recommended to set the `--threads` option
 to at least the number of CPU cores in the machine, since mutation analysis
-may otherwise take a long time to complete.
+may otherwise take a very long time to complete.
 
 [ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
 [structtact-repo]: https://github.com/uwplse/StructTact
