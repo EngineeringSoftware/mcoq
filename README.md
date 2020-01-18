@@ -71,15 +71,17 @@ revision [`82a85b7`][structtact-revision], run:
   --url https://github.com/uwplse/StructTact.git \
   --buildcmd "./configure && make -j2" --qdir ".,StructTact"
 ```
-After running this command, look for a HTML report in the
-`reports/results/StructTact` directory.
+After running this command, the HTML report is available in the
+`reports/results/StructTact` directory. We also provide the corresponding report
+for [online viewing][structtact-report].
 
-For large Coq projects, it is recommended to set the `--threads` option
+For large Coq projects, we recommend setting the `--threads` option
 to at least the number of CPU cores in the machine, since mutation analysis
 may otherwise take a very long time to complete.
 
 [structtact-repo]: https://github.com/uwplse/StructTact
 [structtact-revision]: https://github.com/uwplse/StructTact/commit/82a85b7ec07e71fa6b30cfc05f6a7bfb09ef2510
+[structtact-report]: https://cozy.ece.utexas.edu/mcoq/report/
 
 ## Authors
 
@@ -92,6 +94,6 @@ may otherwise take a very long time to complete.
 
 ## Acknowledgements
 
-The mCoq developers thank Arthur Charguéraud, Georges Gonthier, Farah Hariri,
+The mCoq developers thank Arthur Charguéraud, Georges Gonthier, Farah Hariri, Cătălin Hrițcu,
 Robbert Krebbers, Pengyu Nie, Zachary Tatlock, James R. Wilcox and Théo Zimmermann
 for their feedback on this work.
