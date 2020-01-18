@@ -13,8 +13,8 @@ information on the technique and optimizations that mCoq implements.
 
 Note to ICSE-Demo reviewers: we recently cleaned up the code and improved
 our scripts for running the tool, so the steps shown in the paper submission
-may differ from the ones below. Additionally, the directory structures
-may differ from the ones shown in the demo video.
+may differ from the ones below. Additionally, the directory structure
+may differ from the one shown in the demo video.
 
 [ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
 
@@ -28,7 +28,7 @@ may differ from the ones shown in the demo video.
 - [Gradle 6](https://gradle.org/install/)
 - [Git](https://git-scm.com)
 
-## Installation and usage
+## Installation
 
 We strongly recommend installing the required versions of OCaml, Coq,
 and SerAPI via the [OPAM package manager](https://opam.ocaml.org),
@@ -58,14 +58,21 @@ the available options, use:
 ./mcoq.py --help
 ```
 
-For example, to apply mCoq to [StructTact][structtact-repo]
+Note that the tool currently assumes that all project Coq source
+files to be mutated are listed in the `_CoqProject` file
+in the project's root directory.
+
+## Usage example
+
+To apply mCoq to [StructTact][structtact-repo]
 revision [`82a85b7`][structtact-revision], run:
 ```
 ./mcoq.py --project StructTact --threads 2 --sha 82a85b7 \
   --url https://github.com/uwplse/StructTact.git \
   --buildcmd "./configure && make -j2" --qdir ".,StructTact"
 ```
-After running this command, look for a HTML report in the `reports` directory.
+After running this command, look for a HTML report in the
+`reports/results/StructTact` directory.
 
 For large Coq projects, it is recommended to set the `--threads` option
 to at least the number of CPU cores in the machine, since mutation analysis
