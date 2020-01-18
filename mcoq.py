@@ -113,7 +113,7 @@ def check_args():
     try:
         args = parser.parse_args()
     except:
-        if not "-h" in sys.argv and not "--help" in sys.argv:           
+        if not "-h" in sys.argv and not "--help" in sys.argv:
             print("ERROR: Missing required arguments. Please ensure you have passed correct arguments. List of required args shown above.")
         return False
 
@@ -225,7 +225,7 @@ def main():
 
     if not args.skipmutations:
         if os.path.exists(OLD_REPORT_DIR+"/mcoq_log.txt"):
-            os.system("rm -rf "+OLD_REPORT_DIR+"/mcoq_log.txt")
+            os.system("rm -f "+OLD_REPORT_DIR+"/mcoq_log.txt")
     try:
         if not args.skipmutations:
             setup_repo()
