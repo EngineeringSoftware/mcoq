@@ -113,8 +113,10 @@ def check_args():
     try:
         args = parser.parse_args()
     except:
-        print("ERROR: Missing required arguments. Please ensure you have passed correct arguments. List of required args shown above.")
+        if not "-h" in sys.argv and not "--help" in sys.argv:           
+            print("ERROR: Missing required arguments. Please ensure you have passed correct arguments. List of required args shown above.")
         return False
+
 
     if args.mutator == "" and args.threads != "" and args.threads != "1":
         args.mutator = "MutatorOneFileVOParMutant"
@@ -224,18 +226,17 @@ def main():
     if not args.skipmutations:
         if os.path.exists(OLD_REPORT_DIR+"/mcoq_log.txt"):
             os.system("rm -rf "+OLD_REPORT_DIR+"/mcoq_log.txt")
-        
-    if not args.skipmutations:
-        setup_repo()
-        run_java(MCOQ_MODE)
-    if not args.skipreport:
-        gen_report(MCOQ_MODE)
-
-if __name__ == '__main__':
     try:
-        main()
+        if not args.skipmutations:
+            setup_repo()
+            run_java(MCOQ_MODE)
+        if not args.skipreport:
+            gen_report(MCOQ_MODE)
     except:
         print("Error running mcoq script. Exiting now.")
+
+if __name__ == '__main__':
+    main()
         
 # General examples for running mcoq.py
 # ./mcoq.py --project [PROJECT NAME] --sha [PROJECT SHA] --url [PROJECT URL] --buildcmd [PROJECT CMD] --qdir [PROJECT QDIR] --rdir [PROJECT RDIR]
