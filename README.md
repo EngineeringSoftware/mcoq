@@ -16,6 +16,8 @@ our scripts for running the tool, so the steps shown in the paper submission
 may differ from the ones below. Additionally, the directory structures
 may differ from the ones shown in the demo video.
 
+[ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
+
 ## Requirements
 
 - [OCaml 4.07.1](https://ocaml.org)
@@ -69,6 +71,20 @@ For large Coq projects, it is recommended to set the `--threads` option
 to at least the number of CPU cores in the machine, since mutation analysis
 may otherwise take a very long time to complete.
 
-[ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
 [structtact-repo]: https://github.com/uwplse/StructTact
 [structtact-revision]: https://github.com/uwplse/StructTact/commit/82a85b7ec07e71fa6b30cfc05f6a7bfb09ef2510
+
+## Authors
+
+- [Ahmet Celik](https://ahmet-celik.github.io)
+- [Emilio Jesús Gallego Arias](https://www.irif.fr/~gallego/)
+- [Milos Gligoric](http://users.ece.utexas.edu/~gligoric/)
+- Kush Jain
+- [Karl Palmskog](https://setoid.com)
+- Marinela Parovic
+
+## Acknowledgements
+
+The mCoq developers thank Arthur Charguéraud, Georges Gonthier, Farah Hariri,
+Robbert Krebbers, Pengyu Nie, Zachary Tatlock, James R. Wilcox and Théo Zimmermann
+for their feedback on this work.
