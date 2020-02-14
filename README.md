@@ -15,9 +15,11 @@ If you have used mCoq in a research project, please cite our
 [tool paper][icse-demo-paper] in any related publications:
 ```bibtex
 @inproceedings{JainETAL20mCoqTool,
-  author = {Jain, Kush and Palmskog, Karl and Celik, Ahmet and Gallego Arias, Emilio Jes{\'u}s and Gligoric, Milos},
+  author = {Jain, Kush and Palmskog, Karl and Celik, Ahmet and
+    Gallego Arias, Emilio Jes{\'u}s and Gligoric, Milos},
   title = {{mCoq}: Mutation Analysis for {C}oq Verification Projects},
-  booktitle = {International Conference on Software Engineering, Tool Demonstrations Track},
+  booktitle = {International Conference on Software Engineering,
+    Tool Demonstrations Track},
   pages = {To appear},
   year = {2020},
 }
