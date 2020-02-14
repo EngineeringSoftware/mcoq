@@ -8,15 +8,23 @@ modified versions, called mutants, of the project. If all proofs of a
 mutant are successfully checked, a mutant is declared live; otherwise it
 is declared killed. mCoq produces HTML reports pinpointing both live and
 killed mutants in the Coq code, where live mutants may indicate
-incomplete specifications. The [research paper][ase-paper] provides more
+incomplete specifications. Our original [research paper][ase-paper] provides more
 information on the technique and optimizations that mCoq implements.
 
-Note to ICSE-Demo reviewers: we recently cleaned up the code and improved
-our scripts for running the tool, so the steps shown in the paper submission
-may differ from the ones below. Additionally, the directory structure
-may differ from the one shown in the demo video.
+If you have used mCoq in a research project, please cite our
+[tool paper][icse-demo-paper] in any related publications:
+```bibtex
+@inproceedings{JainETAL20mCoqTool,
+  author = {Jain, Kush and Palmskog, Karl and Celik, Ahmet and Gallego Arias, Emilio Jes{\'u}s and Gligoric, Milos},
+  title = {{mCoq}: Mutation Analysis for {C}oq Verification Projects},
+  booktitle = {International Conference on Software Engineering, Tool Demonstrations Track},
+  pages = {To appear},
+  year = {2020},
+}
+```
 
 [ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
+[icse-demo-paper]: http://users.ece.utexas.edu/~gligoric/papers/JainETAL20mCoqTool.pdf
 
 ## Requirements
 
