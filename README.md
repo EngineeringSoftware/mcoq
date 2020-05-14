@@ -68,9 +68,13 @@ the available options, use:
 ./mcoq.py --help
 ```
 
-Note that the tool currently assumes that all project Coq source
+The tool currently assumes that all project Coq source
 files to be mutated are listed in the `_CoqProject` file
-in the project's root directory.
+in a Coq project's root directory.
+
+Before performing mutations, the script will automatically check
+that all mCoq dependencies are present. To disable these checks,
+pass the option `--nocheck`.
 
 ## Usage example
 
