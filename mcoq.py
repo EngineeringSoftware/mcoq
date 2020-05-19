@@ -8,6 +8,7 @@ import os
 import argparse
 import sys
 import datetime
+import re
 import subprocess
 
 HIDE_SUFFIX = " > /dev/null 2>&1"
@@ -192,12 +193,18 @@ def check_command(command, version):
     
 def check_java_version():
     try:
-        java_version = float(subprocess.check_output("java -version 2>&1 | awk -F[\\\"\.] -v OFS=. \'NR==1{print $2,$3}\'", shell=True))
+        version = subprocess.check_output(['java', '-version'], stderr=subprocess.STDOUT)
+        java_version = version.splitlines()[0].split("version")[1].split()[0].strip('"').split("_")[0].split(".")
+        major = int(java_version[0])
+        if len(java_version) < 2:
+            minor = 0
+        else:
+            minor = int(java_version[1])
     except:
         print("Java is not installed, please install JDK. To install, please follow the steps at: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html")
         return False
 
-    is_incorrect_version = java_version < 1.8 or (java_version > 2 and java_version < 8)
+    is_incorrect_version = (major < 1 and minor < 8) or (major > 2 and major < 8)
     
     if is_incorrect_version:
         print("Incorrect version of Java installed. Please install Java 8 or later. For installation steps, please refer to: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html")
