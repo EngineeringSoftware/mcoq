@@ -194,7 +194,7 @@ def check_command(command, version):
 def check_java_version():
     try:
         version = subprocess.check_output(['java', '-version'], stderr=subprocess.STDOUT)
-        java_version = version.splitlines()[0].split("version")[1].split()[0].strip('"').split("_")[0].split(".")
+        java_version = str(version.splitlines()[0]).split("version")[1].split()[0].strip('"').split("_")[0].split(".")
         major = int(java_version[0])
         if len(java_version) < 2:
             minor = 0
