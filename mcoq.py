@@ -15,7 +15,7 @@ HIDE_SUFFIX = " > /dev/null 2>&1"
 OPAM_UPDATE = "eval $(opam env);"
 MCOQ_DIR = os.path.abspath("mcoq")
 TOOL_JAR = os.path.join(MCOQ_DIR, "build/libs/mcoq-all-1.0-SNAPSHOT.jar")
-COQ_VERSION = "8.10"
+COQ_VERSION = "8.11"
 DOWNLOADS_DIR = "downloads"
 RESULTS_DIR = "reports/results"
 
@@ -38,7 +38,7 @@ def setup_repo():
     os.chdir(curr_dir)
 
 def run_java(mcoq_mode):
-    java_args = " --v810"
+    java_args = " --toolpaper"
     if args.skipeq:
         java_args += " --skipeq"
 
@@ -155,18 +155,18 @@ def gen_report(mcoq_mode):
     os.system("python3 log_parser.py --mode "+mcoq_mode + " --version "+COQ_VERSION +" --sha "+args.sha + reports_args +" --project "+args.project)
 
 def check_dependencies():
-    coq_check = check_command("coqc --version", "8.10")
+    coq_check = check_command("coqc --version", "8.11")
     gradle_check = not os.system("gradle --version" + HIDE_SUFFIX)
-    sercomp_check = check_command("sercomp --version", "0.7.0")
+    sercomp_check = check_command("sercomp --version", "0.11.0")
     git_check = not os.system("git --version" + HIDE_SUFFIX)
     java_check = check_java_version()
     
     if not coq_check:
-        print("Missing coqc version 8.10. To install type: opam pin add coq 8.10.2")
+        print("Missing coqc version 8.10. To install type: opam pin add coq 8.11.0")
     if not gradle_check:
         print("Missing gradle. To install, please follow the steps at: https://gradle.org/install/")
     if not sercomp_check:
-        print("Missing sercomp version 0.7.0. To install type: opam pin add coq-serapi 8.10.0+0.7.0")
+        print("Missing sercomp version 0.11.0. To install type: opam pin add coq-serapi 8.11.0+0.11.0")
     if not git_check:
         print("Missing git. To install, please follow the steps at: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git")
     
@@ -223,7 +223,7 @@ def main():
 
     build_jar()
     
-    MCOQ_MODE = "default_v810" if args.mutator == "" else args.mutator+"_v810"
+    MCOQ_MODE = "default_v811" if args.mutator == "" else args.mutator+"_v811"
     OLD_REPORT_DIR = os.path.abspath("./"+RESULTS_DIR+"/"+args.project+"/"+MCOQ_MODE+"/"+args.sha)
 
     if not args.skipreport:

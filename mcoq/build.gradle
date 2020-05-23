@@ -1,4 +1,4 @@
-group 'edu.utexas.ece.mcoq8_10'
+group 'edu.utexas.ece.mcoq_toolpaper'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -14,7 +14,7 @@ task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Parser for output of sercomp',  
         	'Implementation-Version': version,
-        	'Main-Class': 'edu.utexas.ece.mcoq8_10.MCoq'
+        	'Main-Class': 'edu.utexas.ece.mcoq_toolpaper.MCoq'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
