@@ -1,60 +1,47 @@
-# mCoq: Mutation Analysis for Coq
+# mCoq
 
-mCoq is a tool for mutation analysis of verification projects that use the
-[Coq proof assistant](https://coq.inria.fr).
+mCoq is a tool for [mutation analysis][mutation-analysis] of verification projects
+that use the [Coq proof assistant][coq-website]. mCoq applies a set of mutation
+operators to Coq definitions, generating modified versions, called mutants,
+of the project. If all proofs of a mutant are successfully checked, a mutant
+is declared live; otherwise it is declared killed. After applying operators,
+mCoq produces HTML reports pinpointing both live and killed mutants in the
+Coq code, where live mutants may indicate incomplete specifications.
 
-mCoq applies a set of mutation operators to Coq definitions, generating
-modified versions, called mutants, of the project. If all proofs of a
-mutant are successfully checked, a mutant is declared live; otherwise it
-is declared killed. mCoq produces HTML reports pinpointing both live and
-killed mutants in the Coq code, where live mutants may indicate
-incomplete specifications. Our original [research paper][ase-paper] provides more
-information on the technique and optimizations that mCoq implements.
-
-If you have used mCoq in a research project, please cite our
-[tool paper][icse-demo-paper] in any related publications:
-```bibtex
-@inproceedings{JainETAL20mCoqTool,
-  author = {Jain, Kush and Palmskog, Karl and Celik, Ahmet and
-    Gallego Arias, Emilio Jes{\'u}s and Gligoric, Milos},
-  title = {{mCoq}: Mutation Analysis for {C}oq Verification Projects},
-  booktitle = {International Conference on Software Engineering,
-    Tool Demonstrations Track},
-  pages = {To appear},
-  year = {2020},
-}
-```
-
-[ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
-[icse-demo-paper]: http://users.ece.utexas.edu/~gligoric/papers/JainETAL20mCoqTool.pdf
+[coq-website]: https://coq.inria.fr
+[mutation-analysis]: https://www.fuzzingbook.org/html/MutationAnalysis.html
 
 ## Requirements
 
-- [OCaml 4.07.1](https://ocaml.org)
-- [Coq 8.10.2](https://coq.inria.fr/download)
-- [SerAPI 0.7.0](https://github.com/ejgallego/coq-serapi)
+- [OCaml 4.10.0](https://ocaml.org)
+- [Coq 8.11.1](https://coq.inria.fr/download)
+- [SerAPI 0.11.0](https://github.com/ejgallego/coq-serapi)
 - [Python 3](https://www.python.org)
 - [JDK 8](https://openjdk.java.net) (or later)
 - [Gradle 6](https://gradle.org/install/)
 - [Git](https://git-scm.com)
 
+See [releases][releases-link] if you need support for earlier Coq versions.
+
+[releases-link]: https://github.com/EngineeringSoftware/mcoq/releases
+
 ## Installation
 
 We strongly recommend installing the required versions of OCaml, Coq,
 and SerAPI via the [OPAM package manager](https://opam.ocaml.org),
-version 2.0.5 or later.
+version 2.0.6 or later.
 
 To set up the OPAM-based OCaml environment, use:
 ```
-opam switch create 4.07.1
-opam switch 4.07.1
+opam switch create 4.10.0
+opam switch 4.10.0
 eval $(opam env)
 ```
 Then, install Coq and SerAPI, pinning them to avoid unintended upgrades:
 ```
 opam update
-opam pin add coq 8.10.2
-opam pin add coq-serapi 8.10.0+0.7.0
+opam pin add coq 8.11.1
+opam pin add coq-serapi 8.11.0+0.11.0
 ```
 Next, clone the mCoq repository and enter the directory:
 ```
@@ -97,6 +84,26 @@ may otherwise take a very long time to complete.
 [structtact-revision]: https://github.com/uwplse/StructTact/commit/82a85b7ec07e71fa6b30cfc05f6a7bfb09ef2510
 [structtact-report]: https://cozy.ece.utexas.edu/mcoq/report/
 
+## Technique
+
+Our initial [research paper][ase-paper] provides more information on the technique and
+optimizations that mCoq implements.
+
+If you have used mCoq in a research project, please cite our
+[tool paper][icse-demo-paper] in any related publications:
+```bibtex
+@inproceedings{JainETAL20mCoqTool,
+  author = {Jain, Kush and Palmskog, Karl and Celik, Ahmet and Gallego Arias, Emilio Jes{\'u}s and Gligoric, Milos},
+  title = {{mCoq}: Mutation Analysis for {C}oq Verification Projects},
+  booktitle = {International Conference on Software Engineering, Tool Demonstrations Track},
+  pages = {To appear},
+  year = {2020},
+}
+```
+
+[ase-paper]: https://users.ece.utexas.edu/~gligoric/papers/CelikETAL19mCoq.pdf
+[icse-demo-paper]: http://users.ece.utexas.edu/~gligoric/papers/JainETAL20mCoqTool.pdf
+
 ## Authors
 
 - [Ahmet Celik](https://ahmet-celik.github.io)
@@ -109,5 +116,5 @@ may otherwise take a very long time to complete.
 ## Acknowledgements
 
 The mCoq developers thank Arthur Charguéraud, Georges Gonthier, Farah Hariri, Cătălin Hrițcu,
-Robbert Krebbers, Pengyu Nie, Zachary Tatlock, James R. Wilcox and Théo Zimmermann
+Robbert Krebbers, Pengyu Nie, Zachary Tatlock, Anton Trunov, James R. Wilcox and Théo Zimmermann
 for their feedback on this work.
