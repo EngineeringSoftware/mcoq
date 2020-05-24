@@ -162,7 +162,7 @@ def check_dependencies():
     java_check = check_java_version()
     
     if not coq_check:
-        print("Missing coqc version 8.10. To install type: opam pin add coq 8.11.0")
+        print("Missing coqc version 8.10. To install type: opam pin add coq 8.11.1")
     if not gradle_check:
         print("Missing gradle. To install, please follow the steps at: https://gradle.org/install/")
     if not sercomp_check:
